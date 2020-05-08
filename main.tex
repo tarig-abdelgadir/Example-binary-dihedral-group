@@ -1,0 +1,100 @@
+\documentclass[11pt]{amsart}
+
+%%%Titles and Authors%%%%%%%%%%%%%%%%%%%%%%
+\title{Example: binary dihedral group}
+
+\author{Tarig Abdelgadir}
+\address{The Abdus Salam International Centre for Theoretical Physics, 
+Stada Costiera 11, 
+Trieste 34151, 
+Italy
+}
+\email{tabdelga@ictp.it}
+
+\author{Daniel Chan}
+\address{School of Mathematics and Statistics, 
+UNSW Sydney, 
+NSW 2052,	
+Australia
+}
+\email{danielc@unsw.edu.au}
+
+%-------------------------Packages-------------------------
+\usepackage{mymacros,amssymb}
+\usepackage{fullpage,tikz}
+\usepackage{tikz-cd}
+\usepackage{pst-node}
+\usetikzlibrary{graphs,angles,quotes,positioning,calc,arrows.meta}
+\usepackage[all]{xy}
+
+%-----------------------Macros-------------------------------
+\newcommand{\Wt}{\textup{Wt}}
+
+%-------------------------Text Starts----------------------
+
+
+\begin{document}
+
+\maketitle
+
+The binary dihedral group $\text{BD}_{4n}$ is a double cover of the standard dihedral group. It may be presented as a subgroup of $\SL(2,\bC)$ as follows:
+\[
+\text{BD}_{4n}:= \left\langle \sigma=\left(\begin{array}{cc} \varepsilon & 0 \\ 0 & \varepsilon^{-1} \end{array} \right), \tau=\left( \begin{array}{cc} 0 & 1 \\ -1 & 0 \end{array} \right) \right\rangle
+\]
+with $\varepsilon$ a primitive $2n$th root of unity.
+The group BD$_{4n}$ corresponds to the Dynkin diagram $D_{n+2}$ in the classification of subgroups of $\SL(2,\bC)$.
+It has $n+3$ irreducible representations: four of rank 1 and the rest are of rank 2.
+We will label the four rank 1 irreducibles by $\rho_0,\rho_1,\rho_{n+1},\rho_{n+2}$ and the rank 2 irreducibles will be numbered $\rho_2, \ldots, \rho_{n}$.
+The vector space underlying $\rho_i$ will be denoted $V_i$.
+We fix an $n$ and from now own refer to BD$_{4n}$ by $\Gamma$.
+
+We take $G:=\oplus_i \GL(V_i)$, this comes with a natural functor $\Rep(G) \rightarrow \Rep(\Gamma)$ while both categories come with forgetful functors to $\Vect(\bfk)$.
+We seek to define a strong symmetric monoidal lift $F \colon \Rep(G) \rightarrow \Vect(\bfk)$.
+This coincides with notion defined in Definition~4.1 of the manuscript by the comment at the end of Section 4 of the manuscript.
+On the level of objects and morphisms this is almost tautological.
+It remains to fill in the monoidal data.
+We will do this as is set out by the manuscript: first we express $\Rep(\Gamma)$ as a {\em quotient} or {\em extended category} of $\Rep(G)$.
+
+To do so, it helps to use the McKay quiver of $\Gamma$ to encode some aspects of the monoidal structure.
+Recall that the McKay quiver of $\Gamma$ has a vertex for each isomorphism class of irreducible representation with $\dim(\Hom(\rho_i,\rho_j \otimes \rho_2))$ arrows from a vertex $i$ to a vertex $j$.
+This implies that the number of paths of length $n$ between $i$ and $j$ is the same as the dimension of $\Hom(\rho_i, \rho_j \otimes \rho_2^{\otimes n})$.
+We get relations on the McKay quiver by setting paths of length two corresponding to homomorphisms factoring through $\rho_j \otimes \wedge^2 \rho_2$ to zero; these are called the {\em preprojective relations}.
+
+We let $d_i$ denote the dimension of $V_i$ and use $L_i:= \wedge^{d_i} \,V_i$ to denote the determinant representation of the group $\GL(V_i)$.
+The following are going to be our set of {\em indeterminant} isomorphisms:
+\begin{align}
+    &\bfk \rightarrow V_0 \\
+%\bfx \colon &T_0 \longrightarrow V \label{fd:x} \\
+\alpha_i \colon &L_i \otimes L_i \longrightarrow \bigotimes_{i \rightarrow j} L_j \quad \text{for all} \,\, i\neq 0 \label{fd:alpha} \\
+ P_i \colon &V_i \otimes V_2 \longrightarrow \bigoplus_{i \rightarrow j} V_j \quad \text{for all} \,\, i\neq 0. \label{fd:P}
+\end{align}
+From this we get a morphism of particular importance $\alpha_0:= \otimes_i \,\alpha_i^{d_i}: L_2 \rightarrow L_0$.
+{\red For what follows, we are use duals and top wedges but I am pretty sure this can be phrased with out the need for a rigid monoidal or $\lambda$-ring structure.}
+We write $P_i^j$ for the projection of $P_i$ to the $j$-th summand. 
+Furthermore, we write $$ P_{i^\vee}: = \bigoplus_{j \rightarrow i} (P_j^i)^T \colon V_i^\vee \otimes V_2 \longrightarrow \bigoplus_{i \rightarrow j} V_j^\vee.$$
+
+We then quotient out by the following set of {\em relations}:
+\begin{align}
+    \wedge^{d_i+r} P_i &= \alpha_0^r \circ \alpha_i \circ \wedge^{d_i-r} P_{i^\vee}  \label{eq1:cons2} \\
+    \alpha_0^r \circ \wedge^{d_i-r} P_i &= \alpha_i \circ \wedge^{d_i+r} P_{i^\vee}  \label{eq2:cons2} 
+\end{align}
+here $r =0,\ldots, d_i$ and all $i$.
+
+We unpack Equations~(\ref{eq1:cons2}) and (\ref{eq2:cons2}) to show they are reasonable: we have natural isomorphisms
+$$I^\dagger_r(W) \colon \wedge^{d+r} W \rightarrow \wedge^{d-r} W^\vee \otimes L_W$$ for $W$ a $d$-dimensional vector space and $r= -d, \ldots, d$.
+Precomposing $\wedge^{d_i+r} P_i$ by the inverse of isomorphism $I^{\dagger}_r(V_i \otimes V_2)$ and postcomposing $I^{\dagger}_r(\oplus V_j)$ gives a field that differs from $\alpha_i \circ P_{i^\vee}$ by some multiple of $L_2$.
+The factor $\alpha_0^r$ is used to fix this discrepancy.
+
+We note, {\red without proof for now}, that these relations imply the commutativity of the following diagram:
+\begin{equation*}
+    \xymatrix{V_i \otimes V_2 \otimes V_2 \ar[r]^-{P_i \otimes \text{id}} \ar[d]^{\text{id}} & \big(\bigoplus_{i \rightarrow j}  V_j\big) \otimes V_2 \ar[r]^-{\oplus_{i \rightarrow j} P_j} & \bigoplus_{i \rightarrow j \rightarrow k} V_k \ar[d]^{\text{id}} \\
+    V_i \otimes V_2 \otimes V_2 \ar[r]^-{\text{id} \otimes \text{det}} & V_i \otimes L_2 \ar[r]^-{\alpha_0 \cdot \text{Preproj}} & \bigoplus_{i \rightarrow j \rightarrow k} V_k.}
+\end{equation*}
+
+\begin{proposition}
+The quotient of the category $\Rep(G)$ by the indeterminants and relations above is equivalent to $\Rep(\Gamma)$ as a symmetric monoidal category.
+\end{proposition}
+
+
+
+\end{document}
